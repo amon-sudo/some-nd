@@ -17,13 +17,9 @@ app.get("/", (req, res) => {
 
 
 
-// app.get("/api/users", (req, res) => {
-//     res.send([{id:1, username:"amon", age: 12},
-//         {id:2, username:"julius", age: 13},
-//         {id:3, username:"caeser", age: 14},
-//         {id:4, username:"cicero", age: 15}
-//     ])
-// })
+app.get("/api/users", (req, res) => {
+    console.log(req.query)
+})
 app.get("/api/users/:id", (req, res) => {
     //console.log(req.params)
     //res.send(e)
