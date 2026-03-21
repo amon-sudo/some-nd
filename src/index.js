@@ -98,10 +98,11 @@ app.delete("/api/users/:id", (req, res) =>{
 
     const jj = parseInt(id)
     if(isNaN(jj)) return res.sendStatus(400)
-    const tt = e.find((ee) => ee.id === jj)
+    const tt = e.findIndex((ee) => ee.id === jj)
     if(!tt) return res.sendStatus(404)
+    
     e.splice(tt, 1)
-    return res.sendStatus(204)
+    return res.sendStatus(204).send("removed")
 })
 
 
