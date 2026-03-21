@@ -2,6 +2,14 @@ import express from "express"
 
 
 const app = express()
+
+const mid = (req, res) =>{
+    console.log(`${req.method}, ${req.url}`)
+}
+
+
+
+
 app.use(express.json())
 const PORT = process.env.PORT || 3000
 const e = [
@@ -14,8 +22,7 @@ const e = [
         {id:8, username:"cicero", age: 18},
         {id:9, username:"cicero", age: 19}
     ]
-
-console.log(e)
+app.use(mid)
 app.get("/", (req, res) => {
     res.status(201).send("hi")
 })
@@ -99,7 +106,7 @@ app.delete("/api/users/:id", (req, res) =>{
     const jj = parseInt(id)
     if(isNaN(jj)) return res.sendStatus(400)
     const tt = e.findIndex((ee) => ee.id === jj)
-    if(!tt) return res.sendStatus(404)
+    if(tt ===-1) return res.sendStatus(404)
     
     e.splice(tt, 1)
     return res.sendStatus(204).send("removed")
