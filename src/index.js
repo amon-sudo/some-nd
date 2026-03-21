@@ -2,6 +2,7 @@ import express from "express"
 
 
 const app = express()
+app.use(express.json())
 const PORT = process.env.PORT || 3000
 const e = [
         {id:1, username:"amon", age: 12},
@@ -51,6 +52,66 @@ app.get("/api/products", (req, res) => {
         {id:12, name:"a", price:121},
     ])
 })
+app.post("/api/users/", (req, res) => {
+    console.log(req.body)
+    const {body} = req
+    const newUser = {id:e[e.length -1].id +1, ...body}
+    e.push(newUser)
+    return res.status(201).send("ok")
+
+})
+
+app.put("/api/users/:id", (req, res) => {
+    const { body, params: { id } } = req
+    const p = Number(id)
+
+    if (isNaN(p)) return res.sendStatus(400)
+
+    const user = e.find((k) => k.id === p)
+
+    if (!user) return res.sendStatus(404)
+
+    user.username = body.username
+    user.age = body.age
+
+    return res.status(200).json(user)
+})
+
+
+
+app.patch("/api/users/:id", (req, res) =>{
+    const {body, params:{id}} = req
+
+    const p = Number(id)
+    if(isNaN(p)) return res.sendStatus(400)
+    const the = e.find((ke) => ke.id === p)
+    if (!the) return res.sendStatus(404)
+   
+    if(body.username !==undefined) the.username = body.username
+    if (body.age !==undefined ) the.age = body.age
+    return res.status(200).json(the)
+})
+
+
+app.delete("/api/users/:id", (req, res) =>{
+    const { params:{id}} = req
+
+    const jj = parseInt(id)
+    if(isNaN(jj)) return res.sendStatus(400)
+    const tt = e.find((ee) => ee.id === jj)
+    if(!tt) return res.sendStatus(404)
+    e.splice(tt, 1)
+    return res.sendStatus(204)
+})
+
+
+
+
+
+
+
+
+
 
 
 
