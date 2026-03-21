@@ -7,7 +7,11 @@ const e = [
         {id:1, username:"amon", age: 12},
         {id:2, username:"julius", age: 13},
         {id:3, username:"caeser", age: 14},
-        {id:4, username:"cicero", age: 15}
+        {id:5, username:"cicero", age: 15},
+        {id:6, username:"cicero", age: 16},
+        {id:7, username:"cicero", age: 17},
+        {id:8, username:"cicero", age: 18},
+        {id:9, username:"cicero", age: 19}
     ]
 
 console.log(e)
@@ -19,7 +23,14 @@ app.get("/", (req, res) => {
 
 app.get("/api/users", (req, res) => {
     console.log(req.query)
-})
+    const{query:{filter, value}} = req
+ // when filtres and values are undefined
+    if (filter && value) 
+        return res.send(
+      e.filter((i) =>  i[filter].includes(value) ))
+    return res.send(e)
+})  
+
 app.get("/api/users/:id", (req, res) => {
     //console.log(req.params)
     //res.send(e)
